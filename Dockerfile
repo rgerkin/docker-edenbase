@@ -24,7 +24,20 @@ RUN apt-get -qq update && \
     pip install distribute --upgrade && \
     pip install "requests==2.7.0" "numpy==1.8.0" "scipy==0.14.0" && \
     pip install -r requirements.txt && \
+    pip install "jupyter==1.0.0" && \
     apt-get remove -y --purge libzmq-dev software-properties-common libc-dev libreadline-dev && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+## from jupyter documentation
+# Add Tini. Tini operates as a process subreaper for jupyter. This prevents
+# kernel crashes.
+ENV TINI_VERSION v0.6.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+RUN mkdir /export
+EXPOSE 8888
+CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--notebook-dir=/export/"]
