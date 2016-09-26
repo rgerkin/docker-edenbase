@@ -15,8 +15,8 @@ ADD requirements.txt .
 # scikit-learn installation from requirements.txt complains about missing scipy, so install beforehand
 RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y apt-transport-https \
-    python-dev libc-dev python-pip gfortran libfreetype6-dev libpng-dev python-openbabel pkg-config \
-    build-essential libblas-dev liblapack-dev git-core wget software-properties-common python-pygraphviz \
+    python3-dev libc-dev python3-pip gfortran libfreetype6-dev libpng-dev python-openbabel pkg-config \
+    build-essential libblas-dev liblapack-dev git-core wget software-properties-common python3-pygraphviz \
     libopenbabel-dev swig libjpeg62-dev && \
     add-apt-repository ppa:bibi-help/bibitools && add-apt-repository ppa:j-4/vienna-rna && \
     apt-get -qq update && \
